@@ -1,0 +1,35 @@
+services:
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: password123
+      MYSQL_DATABASE: ors
+      MYSQL_USER: orsuser
+      MYSQL_PASSWORD: password
+    volumes:
+      - ors-db:/var/lib/mysql
+    networks:
+      - ors-net
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - ors-net
+    restart: unless-stopped
+
+networks:
+  ors-net:
+
+volumes:
+  ors-db:
