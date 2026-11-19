@@ -8,7 +8,7 @@
     
     <form action="apply.jsp" method="post">
         
-        <label>Full Name:</label>
+        <label>Full Name: G Koushik</label>
         <input type="text" name="name" required><br><br> 
         
         <label>Email:</label>
